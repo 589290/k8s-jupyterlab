@@ -1,12 +1,21 @@
 ## Jupyter Lab installation on k8s
-```bash
-kubectl apply -f jupyterlab-pvc.yaml
-kubectl apply -f jupyterlab-deployment.yaml
-kubectl apply -f jupyterlab-service.yaml
+
+If you need a storage class and/or a persistent-volume...
 ```
-  
-If deployed on minikube locally, use...
-```bash
-minikube tunnel
+kubectl apply -f 0-local-storage.yaml && \
+mkdir -p /data && \
+chmod 777 /data && \
+kubectl apply -f 1-local-pv.yaml
 ```
-...to expose the service on [http://0.0.0.0:8888](http://0.0.0.0:8888)
+
+Install J Lab...
+```bash
+kubectl create namespace jlab
+kubectl apply -f 2-jupyterlab-pvc.yaml
+kubectl apply -f 3-jupyterlab-deployment.yaml
+kubectl apply -f 4-jupyterlab-service.yaml
+```
+
+Jupyter Lab is now provided via nodePort on [http://0.0.0.0:30888](http://0.0.0.0:30888)
+
+⛵

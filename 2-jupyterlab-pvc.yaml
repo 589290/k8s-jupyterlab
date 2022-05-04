@@ -8,5 +8,5 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 10Gi
-#  storageClassName: standard-gp2-retain
+      storage: 8Gi
+  storageClassName: local-storage

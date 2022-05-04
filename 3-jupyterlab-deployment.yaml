@@ -1,19 +1,17 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: jupyterlab
+  name: jupyterlab-deployment
   namespace: jlab
-  labels:
-    name: jupyterlab
 spec:
   replicas: 1
   selector:
     matchLabels:
-      name: jupyterlab
+      app: jupyterlab
   template:
     metadata:
       labels:
-        name: jupyterlab
+        app: jupyterlab
     spec:
       securityContext:
         runAsUser: 0
@@ -31,7 +29,7 @@ spec:
               start.sh jupyter lab --LabApp.token='password' --LabApp.ip='0.0.0.0' --LabApp.allow_root=True
           volumeMounts:
             - name: jupyterlab-data
-              mountPath: /home/jovyan
+              mountPath: /data
           resources:
             requests:
               memory: 500Mi
